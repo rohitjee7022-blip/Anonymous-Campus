@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | Anonymous Campus</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <h2>Anonymous Campus</h2>
+        </div>
+
+        <nav class="navigation">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="track.html">Track Issues</a>
+            <button id="logoutButton" class="logout-button">Logout</button>
+        </nav>
+    </header>
+
+    <main class="dashboard-container">
+
+        <section class="dashboard-welcome">
+            <h1>Welcome, <span id="studentName">Student</span>!</h1>
+            <p>
+                Your voice matters. Share your experiences and
+                help improve everyday campus facilities.
+            </p>
+        </section>
+        <!-- ACCOUNT NOTICE & APPEALS -->
+
+<section class="account-notice-section" id="accountNoticeSection" hidden>
+
+    <h2>Account Notice</h2>
+
+    <p id="noticeMessage"></p>
+
+    <div class="notice-details">
+
+        <p><strong>Action:</strong> <span id="noticeAction"></span></p>
+
+        <p><strong>Category:</strong> <span id="noticeCategory"></span></p>
+
+        <p><strong>Reason:</strong> <span id="noticeReason"></span></p>
+
+        <p><strong>Date:</strong> <span id="noticeDate"></span></p>
+        <p id="noticeExpiryRow" hidden>
+    <strong>Suspension expires:</strong>
+    <span id="noticeExpiry"></span>
+</p>
+
+        <p><strong>Status:</strong> <span id="noticeStatus"></span></p>
+
+        <p><strong>Appeal status:</strong> <span id="appealStatus"></span></p>
+
+    </div>
+
+    <div class="appeal-form" id="appealForm">
+
+        <h3>Submit an Appeal</h3>
+
+        <p>If you believe this action was issued incorrectly, explain your concern below.</p>
+
+        <label for="appealExplanation">Your explanation</label>
+
+        <textarea
+            id="appealExplanation"
+            minlength="20"
+            maxlength="1000"
+            placeholder="Explain why you believe this action should be reviewed..."
+        ></textarea>
+
+        <button type="button" class="nav-button" id="submitAppealButton">
+            Submit Appeal
+        </button>
+
+        <p class="appeal-message" id="appealMessage"></p>
+
+    </div>
+
+</section>
+
+        <section class="dashboard-summary">
+            <div class="summary-card">
+                <h3>6</h3>
+                <p>Feedback Categories</p>
+            </div>
+
+            <div class="summary-card">
+                <h3>1 / Week</h3>
+                <p>Submission Limit Per Category</p>
+            </div>
+
+            <div class="summary-card">
+                <h3>Private</h3>
+                <p>Your Feedback Identity</p>
+            </div>
+        </section>
+
+        <section class="dashboard-categories">
+
+            <div class="section-heading">
+                <h2>Campus Facilities</h2>
+                <p>Select a category to share your feedback.</p>
+            </div>
+
+            <div class="category-grid">
+                <p id="suspensionBlockMessage" hidden>
+    Feedback submission is temporarily unavailable while your account is suspended.
+</p>
+
+                <div class="dashboard-category">
+                    <h3>Mess & Food</h3>
+                    <p>Food quality, hygiene and dining facilities.</p>
+                    <a href="feedback.html?category=mess">Share Feedback →</a>
+                </div>
+
+                <div class="dashboard-category">
+                    <h3>Laundry</h3>
+                    <p>Washing facilities and laundry services.</p>
+                    <a href="feedback.html?category=laundry">Share Feedback →</a>
+                </div>
+
+                <div class="dashboard-category">
+                    <h3>Wi-Fi & Internet</h3>
+                    <p>Internet speed and network connectivity.</p>
+                    <a href="feedback.html?category=wifi">Share Feedback →</a>
+                </div>
+
+                <div class="dashboard-category">
+                    <h3>Room Facilities</h3>
+                    <p>Lights, fans, furniture and maintenance.</p>
+                    <a href="feedback.html?category=room">Share Feedback →</a>
+                </div>
+
+                <div class="dashboard-category">
+                    <h3>Water Facilities</h3>
+                    <p>Drinking water and water cooler facilities.</p>
+                    <a href="feedback.html?category=water">Share Feedback →</a>
+                </div>
+
+                <div class="dashboard-category">
+                    <h3>Campus & Sports</h3>
+                    <p>Playgrounds, sports equipment and common areas.</p>
+                    <a href="feedback.html?category=sports">Share Feedback →</a>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="dashboard-actions">
+            <div>
+                <h2>Track Campus Improvements</h2>
+                <p>Check updates on reported facility issues.</p>
+                <a href="track.html" class="dashboard-link">Track Issues →</a>
+            </div>
+        </section>
+
+        <p class="dashboard-note">
+            Note: Feedback submission limits, privacy protection
+            and issue tracking will be connected to the backend
+            before the platform is launched.
+        </p>
+
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 Anonymous Campus. Speak honestly. Stay protected.</p>
+    </footer>
+
+    <script type="module" src="../js/dashboard.js"></script>
+
+</body>
+</html>

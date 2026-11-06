@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Feedback | Anonymous Campus</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <header class="header">
+
+        <div class="logo">
+            <h2>Anonymous<span>Campus</span></h2>
+            <p>Speak honestly. Stay protected.</p>
+        </div>
+
+        <nav class="navigation">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="track.html">Track Issue</a>
+        </nav>
+
+        <a href="feedback.html" class="nav-button active">Share Feedback</a>
+
+    </header>
+
+
+    <main class="feedback-page">
+
+        <div class="feedback-heading">
+            <p class="section-label">YOUR VOICE MATTERS</p>
+
+            <h1>Share Your <span>Experience.</span></h1>
+
+            <p>
+                Tell us about a hostel or campus facility that needs attention.
+                Your feedback can help highlight problems and improve everyday campus life.
+            </p>
+        </div>
+
+
+        <!-- PRIVACY INFORMATION -->
+
+        <div class="privacy-box">
+
+            <h3>🔒 Your Privacy Comes First</h3>
+
+            <p>
+                Your feedback is stored separately from your name,
+                roll number and email address. Please avoid including
+                personal or identifying information in your comments.
+            </p>
+
+            <p class="privacy-warning">
+                Anonymous Campus uses a separate private account mapping
+                for eligibility, submission limits and policy enforcement.
+                Privileged backend access may be able to associate feedback
+                with an account. Absolute anonymity is not guaranteed.
+            </p>
+
+        </div>
+
+
+        <!-- STUDENT ACCOUNT NOTICE AND APPEALS -->
+
+        <section class="issues-section" id="accountNoticeSection" hidden></section>
+
+            <h2>My Account Notices & Appeals</h2>
+
+            <p class="issues-description">
+                View any warning or suspension issued to your account
+                and submit an appeal if you believe it was incorrect.
+            </p>
+
+            <div id="accountNoticeMessage" aria-live="polite">
+                Checking your account notices...
+            </div>
+
+            <div id="accountNoticeDetails" hidden>
+
+                <h3 id="noticeAction"></h3>
+
+                <p>
+                    <strong>Policy category:</strong>
+                    <span id="noticeCategory"></span>
+                </p>
+
+                <p>
+                    <strong>Reason:</strong>
+                    <span id="noticeReason"></span>
+                </p>
+
+                <p>
+                    <strong>Status:</strong>
+                    <span id="noticeStatus"></span>
+                </p>
+
+                <p id="noticeIssuedAt"></p>
+
+                <p id="noticeExpiry"></p>
+
+                <p>
+                    <strong>Appeal status:</strong>
+                    <span id="noticeAppealStatus"></span>
+                </p>
+
+                <div id="appealFormContainer" hidden>
+
+                    <h3>Submit an Appeal</h3>
+
+                    <p>
+                        Explain why you believe this action should
+                        be reconsidered. Your explanation must contain
+                        between 20 and 1000 characters.
+                    </p>
+
+                    <form id="appealForm">
+
+                        <div class="form-group">
+
+                            <label for="appealExplanation">
+                                Your explanation *
+                            </label>
+
+                            <textarea
+                                id="appealExplanation"
+                                rows="5"
+                                maxlength="1000"
+                                minlength="20"
+                                required
+                                placeholder="Explain why you believe the warning or suspension was incorrect."
+                            ></textarea>
+
+                        </div>
+
+                        <button type="submit" class="primary-button">
+                            Submit Appeal →
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FEEDBACK FORM -->
+
+        <form class="feedback-form" id="feedbackForm">
+
+            <h2>Feedback Details</h2>
+
+            <p class="form-description">
+                Fields marked with * are required.
+            </p>
+
+            <div class="form-group">
+
+                <label for="facility">Select a facility *</label>
+
+                <select id="facility" required>
+                    <option value="">Select a category</option>
+                    <option value="mess">Mess & Food</option>
+                    <option value="laundry">Laundry</option>
+                    <option value="wifi">Wi-Fi & Internet</option>
+                    <option value="room">Room Facilities</option>
+                    <option value="water">Water Facilities</option>
+                    <option value="sports">Campus & Sports</option>
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>How would you rate this facility? *</label>
+
+                <p class="rating-description">
+                    1 = Very Poor | 5 = Excellent
+                </p>
+
+                <div class="rating-options">
+
+                    <label>
+                        <input type="radio" name="rating" value="1" required>
+                        <span>1</span>
+                    </label>
+
+                    <label>
+                        <input type="radio" name="rating" value="2">
+                        <span>2</span>
+                    </label>
+
+                    <label>
+                        <input type="radio" name="rating" value="3">
+                        <span>3</span>
+                    </label>
+
+                    <label>
+                        <input type="radio" name="rating" value="4">
+                        <span>4</span>
+                    </label>
+
+                    <label>
+                        <input type="radio" name="rating" value="5">
+                        <span>5</span>
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="comment">
+                    Describe the issue (Optional)
+                </label>
+
+                <textarea
+                    id="comment"
+                    rows="3"
+                    maxlength="250"
+                    placeholder="Explain what is working well or what needs improvement. Avoid names and personal details."
+                ></textarea>
+
+                <p class="input-hint">
+                    Maximum 250 characters. Do not include identifying information.
+                </p>
+
+            </div>
+
+
+            <button type="submit" class="primary-button submit-button">
+                Submit Feedback →
+            </button>
+
+            <div id="formMessage" class="form-message"></div>
+
+        </form>
+
+
+        <p class="feedback-back">
+            <a href="index.html">← Back to Home</a>
+        </p>
+
+    </main>
+
+
+    <footer class="footer">
+
+        <h2>Anonymous<span>Campus</span></h2>
+
+        <p>Speak honestly. Stay protected. Create change.</p>
+
+        <p class="footer-note">
+            A student feedback platform focused on hostel life
+            and everyday campus facilities.
+        </p>
+
+        <p class="copyright">
+            © 2026 Anonymous Campus. Hackathon Project.
+        </p>
+
+    </footer>
+
+
+    <script type="module" src="../js/feedback.js"></script>
+
+</body>
+</html>

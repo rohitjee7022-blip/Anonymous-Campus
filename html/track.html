@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Issues | Anonymous Campus</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <h2>Anonymous Campus</h2>
+        </div>
+
+        <nav class="navigation">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="track.html">Track Issues</a>
+            <button id="logoutButton" class="logout-button">Logout</button>
+        </nav>
+    </header>
+
+    <main class="dashboard-container">
+
+        <section class="dashboard-welcome">
+            <h1>Track Campus Issues</h1>
+            <p>
+                Follow the progress of reported facility issues
+                and stay informed about campus improvements.
+            </p>
+        </section>
+
+        <section class="dashboard-categories">
+            <div class="section-heading">
+                <h2>Reported Facility Issues</h2>
+                <p>
+                    Issues are displayed after reaching the
+                    minimum threshold of five reports.
+                </p>
+            </div>
+
+            <div id="trackMessage">
+                Loading facility issues...
+            </div>
+
+            <div id="issuesContainer" class="category-grid"></div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 Anonymous Campus. Speak honestly. Stay protected.</p>
+    </footer>
+
+    <script type="module" src="../js/track.js"></script>
+
+</body>
+</html>

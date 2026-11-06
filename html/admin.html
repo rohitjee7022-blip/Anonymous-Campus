@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anonymous Campus | Admin Dashboard</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <header class="admin-header">
+        <h1>Anonymous Campus</h1>
+        <p>Admin Dashboard</p>
+
+        <button id="logoutButton" class="logout-button">
+            Logout
+        </button>
+    </header>
+
+    <main class="admin-container">
+
+        <!-- FACILITY OVERVIEW -->
+
+        <section class="admin-welcome">
+            <h2>Facility Overview</h2>
+
+            <button id="refreshOverview" class="refresh-button">
+                ↻ Refresh Overview
+            </button>
+
+            <p>
+                Review overall student feedback about hostel
+                facilities and campus services.
+            </p>
+        </section>
+
+        <section class="facility-grid" id="facilityGrid">
+
+            <div class="facility-card" id="mess">
+                <h3>Mess & Food</h3>
+                <p class="average">-- / 5</p>
+                <p class="total">Loading submissions...</p>
+            </div>
+
+            <div class="facility-card" id="laundry">
+                <h3>Laundry</h3>
+                <p class="average">-- / 5</p>
+                <p class="total">Loading submissions...</p>
+            </div>
+
+            <div class="facility-card" id="wifi">
+                <h3>Wi-Fi & Internet</h3>
+                <p class="average">-- / 5</p>
+                <p class="total">Loading submissions...</p>
+            </div>
+
+            <div class="facility-card" id="room">
+                <h3>Room Facilities</h3>
+                <p class="average">-- / 5</p>
+                <p class="total">Loading submissions...</p>
+            </div>
+
+            <div class="facility-card" id="water">
+                <h3>Water Facilities</h3>
+                <p class="average">-- / 5</p>
+                <p class="total">Loading submissions...</p>
+            </div>
+
+            <div class="facility-card" id="sports">
+                <h3>Campus & Sports</h3>
+                <p class="average">-- / 5</p>
+                <p class="total">Loading submissions...</p>
+            </div>
+
+        </section>
+
+
+        <!-- RECENT STUDENT FEEDBACK -->
+
+        <section class="issues-section moderation-section">
+
+            <h2>Recent Student Feedback</h2>
+
+            <p class="issues-description">
+                Review recent anonymous feedback submitted
+                about campus facilities and services.
+            </p>
+
+            <div class="privacy-notice">
+
+                <p>
+                    <strong>Fairness and privacy:</strong>
+                    Student feedback and ratings must be treated
+                    fairly. Negative opinions, low ratings, and
+                    criticism are not policy violations.
+                </p>
+
+                <p>
+                    <strong>Policy action:</strong>
+                    An admin may issue a warning or a 7-day
+                    suspension only when there is a specific
+                    policy violation supported by a valid reason.
+                </p>
+
+                <p>
+                    <strong>Student rights:</strong>
+                    Students can view their account notices and
+                    submit an appeal against a sanction.
+                    Appeals can be reviewed by an administrator.
+                </p>
+
+                <p>
+                    <strong>Rating protection:</strong>
+                    Account warnings or suspensions do not
+                    automatically remove feedback ratings from
+                    facility statistics.
+                </p>
+
+            </div>
+
+            <button id="refreshModeration" class="refresh-button">
+                ↻ Refresh Recent Feedback
+            </button>
+
+            <div id="moderationMessage" aria-live="polite">
+                Loading recent feedback...
+            </div>
+
+            <div id="moderationQueue">
+                <p>Connecting to recent feedback...</p>
+            </div>
+
+        </section>
+
+
+        <!-- FACILITY ISSUES -->
+
+        <section class="issues-section">
+
+            <h2>Facility Issues Overview</h2>
+
+            <p class="issues-description">
+                Privacy-reviewed issues reported by students.
+            </p>
+
+            <div id="facilityIssues">
+                <p>
+                    Issues will appear here when enough reports
+                    are available.
+                </p>
+            </div>
+
+        </section>
+
+
+        <p id="adminMessage">
+            Connecting to the dashboard...
+        </p>
+
+    </main>
+
+    <script type="module" src="../js/admin.js"></script>
+
+</body>
+</html>
