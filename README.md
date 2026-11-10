@@ -1,12 +1,17 @@
+
 # Anonymous Campus
 
 ### A Privacy-Focused Student Feedback and Campus Improvement Platform
 
-Anonymous Campus is a web-based platform designed to help students share honest feedback about campus facilities while reducing the fear of personal identification.
+**Speak honestly. Stay protected. Improve together.**
+
+Anonymous Campus is a privacy-first web application developed for IIIT Sonepat. It provides students with a safer way to share honest feedback about campus facilities while reducing the fear of personal identification.
 
 Students can submit ratings and comments about facilities such as mess, laundry, Wi-Fi, rooms, water and sports facilities. Administrators can review feedback, identify recurring facility issues and track their resolution.
 
-**Our goal:** To create a transparent feedback system where student voices can contribute to meaningful campus improvements.
+**Live Website:** https://anonymous-campus-test.netlify.app
+
+**GitHub Repository:** https://github.com/rohitjee7022-blip/Anonymous-Campus
 
 ---
 
@@ -28,13 +33,21 @@ Students can submit ratings and comments about facilities such as mess, laundry,
 
 - Secure admin authentication and role-based access.
 - Dashboard displaying facility feedback statistics.
-- Minimum five-response threshold before facility issues and aggregate information become visible.
+- Minimum five-response threshold before aggregate information becomes visible.
 - Access to recent student feedback.
-- Feedback moderation tools.
+- Feedback comment moderation tools.
 - Facility issue tracking and status updates.
 - Ability to issue policy-based warnings and seven-day suspensions.
 - Appeal review and sanction reversal.
-- Audit records for account actions and appeal decisions.
+- Records of account actions and appeal decisions.
+
+### AI-Powered Features
+
+- BharatCode AI integration for facility insights.
+- Analysis of aggregated facility ratings.
+- Identification of facilities requiring attention.
+- AI-generated practical recommendations.
+- Privacy-conscious processing without sending raw student comments or direct student identifiers.
 
 ---
 
@@ -45,18 +58,24 @@ Students can submit ratings and comments about facilities such as mess, laundry,
 - CSS3
 - JavaScript (ES Modules)
 
-### Backend
-- Firebase Cloud Functions
+### Backend and Serverless Functions
 - Node.js
+- Netlify Functions
+- Firebase Cloud Functions (development and emulator backend)
 - Firebase Admin SDK
 
 ### Database and Authentication
 - Firebase Authentication
 - Cloud Firestore
 
-### Development and Testing Tools
-- Visual Studio Code
+### AI Integration
+- BharatCode AI API
+- Qwen 3.8 27B model
+
+### Hosting and Development Tools
+- Netlify
 - Firebase Emulator Suite
+- Visual Studio Code
 - Git and GitHub
 
 ---
@@ -67,9 +86,10 @@ Anonymous Campus follows a client-server architecture.
 
 1. **Student Interface:** Students interact with the application through a web interface built using HTML, CSS and JavaScript.
 2. **Authentication:** Firebase Authentication handles student and administrator sign-in.
-3. **Backend Processing:** Firebase Cloud Functions validate requests, enforce permissions, process feedback and manage account actions.
+3. **Backend Processing:** Server-side functions validate requests, enforce permissions, process feedback and manage account actions.
 4. **Database:** Cloud Firestore stores feedback, facility information, account notices, submission records and appeal information.
-5. **Administrator Dashboard:** Authorized administrators access feedback statistics, recent submissions, facility issues and appeal management tools.
+5. **AI Processing:** BharatCode AI analyses aggregated facility data and generates recommendations.
+6. **Administrator Dashboard:** Authorized administrators access feedback statistics, recent submissions, facility issues and AI-generated insights.
 
 ### Application Flow
 
@@ -83,10 +103,17 @@ Student / Administrator
  Firebase Authentication
           |
           v
- Firebase Cloud Functions
+ Server-side Functions
           |
           v
      Cloud Firestore
+          |
+          v
+   BharatCode AI
+ (Aggregate Data Only)
+          |
+          v
+ Administrator Insights
 ```
 
 ---
@@ -127,11 +154,9 @@ Install the following before running the project:
 ### 1. Clone the Repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
-cd "Anonymous Campus"
+git clone https://github.com/rohitjee7022-blip/Anonymous-Campus.git
+cd Anonymous-Campus
 ```
-
-Replace the repository URL with the actual GitHub repository URL.
 
 ### 2. Install Backend Dependencies
 
@@ -191,44 +216,49 @@ Administrator access is controlled by the backend.
 - The backend checks administrator authorization using the `adminUsers` collection.
 - A student cannot grant themselves administrator privileges through the registration page.
 - Administrative access must never be assigned through an untrusted client-side operation.
+- Demo administrator credentials are shared separately when required and are not published in this repository.
 
 ---
 
 ## Project Status
 
-Anonymous Campus currently has a developed local prototype implemented and tested using the Firebase Emulator Suite.
+Anonymous Campus is a publicly deployed web application. Its production website is hosted on Netlify and uses Firebase Authentication and Cloud Firestore.
+
+**Live Website:** https://anonymous-campus-test.netlify.app
 
 ### Implemented Features
 
 - Student registration, login and logout.
-- College email verification.
+- College email verification and student eligibility checks.
 - Feedback submission for six campus facilities.
 - Weekly submission limits and duplicate prevention.
 - Automatic masking of recognised inappropriate language.
 - Facility feedback statistics with a minimum response threshold.
 - Automatic facility issue creation and report counting from low ratings.
-- Administrator dashboard and feedback moderation.
+- Administrator dashboard and feedback comment moderation.
 - Facility issue tracking and status updates.
 - Student warnings and seven-day suspensions.
 - Student sanction appeals and administrator appeal review.
 - Backend authentication and authorization checks.
 - Private account notices and suspension expiry handling.
+- AI-powered Facility Insights.
+- Privacy-conscious administrative reporting.
+
+### Deployment
+
+- Frontend hosted on Netlify.
+- Production server-side functions deployed through Netlify Functions.
+- Firebase Authentication used for authentication.
+- Cloud Firestore used for application data.
+- BharatCode AI integration used for generating facility improvement recommendations.
 
 ### Future Improvements
 
-- Production deployment and hosting.
 - Further separation of feedback and account records.
 - Expanded security and edge-case testing.
 - Improved accessibility and mobile responsiveness.
 - Enhanced administrative reporting and analytics.
-
----
-
-## Project Objective
-
-Anonymous Campus aims to provide students with a safer channel for expressing concerns, while helping administrators identify recurring problems and make informed decisions about campus improvements.
-
-**Speak honestly. Stay protected. Improve together.**
+- Additional testing and performance improvements.
 
 ---
 
@@ -246,8 +276,8 @@ Anonymous Campus integrates the BharatCode AI API to help administrators underst
 
 ### AI Workflow
 
-1. Students submit anonymous facility feedback.
-2. Firebase Cloud Functions calculate aggregate statistics.
+1. Students submit facility feedback.
+2. Backend functions calculate aggregate statistics.
 3. Relevant aggregate data and privacy-reviewed issue information are sent to BharatCode AI.
 4. BharatCode AI generates insights and recommendations.
 5. Administrators review the results and decide on appropriate actions.
@@ -262,44 +292,65 @@ Anonymous Campus integrates the BharatCode AI API to help administrators underst
 ### AI Technology
 
 - Provider: BharatCode AI
-- Model: qwen-3.8-27b
+- Model: Qwen 3.8 27B
 - API: BharatCode Responses API
 
 AI-generated recommendations support administrative decision-making; final decisions remain with human administrators.
+
+---
 
 ## Live Website
 
 **Project URL:** https://anonymous-campus-test.netlify.app
 
-Anonymous Campus is a privacy-first campus facility feedback platform for IIIT Sonepat. It allows students to share feedback about campus facilities while protecting their identities.
+The website is publicly accessible. Students and administrators must still authenticate to access their respective dashboards.
+
+---
 
 ## Instructions for Judges
 
-### 1. Open the website
-Visit: https://anonymous-campus-test.netlify.app
+### 1. Open the Website
+
+Visit:
+
+https://anonymous-campus-test.netlify.app
 
 ### 2. Admin Dashboard
+
 - Open the Admin Login page.
-- Use the demo administrator Gmail credentials provided separately to the judges.
+- Use the demo administrator Gmail credentials if requested by the organizers.
 - After logging in, judges can explore:
   - Facility Overview
   - Recent Student Feedback
   - Privacy-reviewed facility issues
+  - Feedback moderation
+  - Student account actions and appeals
   - AI-powered Facility Insights
 
 ### 3. Student Dashboard
+
 - Open the Student Login / Registration page.
 - Student access requires an eligible, verified IIIT Sonepat college email address.
 - After logging in, students can explore the facility feedback system and submit feedback.
 
 ### 4. AI Facility Insights
+
 - Log in using the demo administrator account.
 - Open the Admin Dashboard.
-- Click **Generate AI Insights** to view AI-generated recommendations based on aggregated facility feedback.
+- Click **Generate AI Insights**.
+- Review AI-generated recommendations based on aggregated facility feedback.
 
 ### Important Notes
-- Admin demo credentials will be shared separately and should not be published in this repository.
-- Student accounts must meet the college email and eligibility requirements.
-- Student identities are protected in the administrative feedback view.
 
-**Slogan:** Speak honestly. Stay protected.
+- Admin demo credentials will be shared separately if requested by the organizers.
+- Student accounts must meet college email and eligibility requirements.
+- Student identities are protected in the administrative feedback view.
+- Passwords and private API credentials are never published in this repository.
+
+---
+
+## Project Objective
+
+Anonymous Campus aims to provide students with a safer channel for expressing concerns, while helping administrators identify recurring problems and make informed decisions about campus improvements.
+
+**Speak honestly. Stay protected. Improve together.**
