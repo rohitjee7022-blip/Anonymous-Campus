@@ -1,4 +1,3 @@
-
 import { auth, functions } from "./firebase.js";
 
 import {
@@ -22,6 +21,8 @@ const moderateFeedback = httpsCallable(functions, "moderateFeedback");
 const issueAccountAction = httpsCallable(functions, "issueAccountAction");
 const getPendingSanctionAppeals = httpsCallable(functions, "getPendingSanctionAppeals");
 const reviewSanctionAppeal = httpsCallable(functions, "reviewSanctionAppeal");
+const generateAIFacilityInsights =
+    httpsCallable(functions, "generateAIFacilityInsights");
 
 const facilityNames = {
     mess: "Mess & Food",
@@ -364,7 +365,7 @@ async function loadPendingFeedback() {
             }
 
             card.appendChild(visibility);
-            
+
             // ==========================================
             // COMMENT MODERATION
             // ==========================================
@@ -491,7 +492,6 @@ async function loadPendingFeedback() {
                 withholdButton,
                 moderationMessage
             );
-
 
             // No account action for already restricted feedback.
             if (item.visibilityStatus !== "restricted") {
@@ -927,6 +927,64 @@ const refreshModerationButton =
 
 if (refreshModerationButton) {
     refreshModerationButton.addEventListener("click", loadPendingFeedback);
+}
+
+// ==========================================
+// BHARATCODE AI FACILITY INSIGHTS
+// ==========================================
+
+const aiInsightsButton =
+    document.getElementById("generateAiInsights");
+
+const aiInsightsMessage =
+    document.getElementById("aiInsightsMessage");
+
+const aiInsightsOutput =
+    document.getElementById("aiInsightsOutput");
+
+if (aiInsightsButton) {
+
+    aiInsightsButton.addEventListener("click", async () => {
+
+        aiInsightsButton.disabled = true;
+
+        if (aiInsightsMessage) {
+            aiInsightsMessage.textContent =
+                "Analyzing aggregate facility data...";
+        }
+
+        if (aiInsightsOutput) {
+            aiInsightsOutput.textContent = "";
+        }
+
+        try {
+
+            const result = await generateAIFacilityInsights();
+
+            if (aiInsightsOutput) {
+                aiInsightsOutput.textContent =
+                    result.data.insights || "No insights returned.";
+            }
+
+            if (aiInsightsMessage) {
+                aiInsightsMessage.textContent =
+                    "Analysis complete. Review AI recommendations before taking action.";
+            }
+
+        } catch (error) {
+
+            console.error("AI insights error:", error);
+
+            if (aiInsightsMessage) {
+                aiInsightsMessage.textContent =
+                    error.message || "Unable to generate AI insights.";
+            }
+
+        } finally {
+
+            aiInsightsButton.disabled = false;
+        }
+    });
 }
 
 // ==========================================

@@ -1522,3 +1522,245 @@ exports.reviewSanctionAppeal = onCall(async (request) => {
     };
 
 });
+
+// ==========================================
+// BHARATCODE AI - FACILITY INSIGHTS
+// ==========================================
+
+exports.generateAIFacilityInsights = onCall(
+    { timeoutSeconds: 120 },
+    async (request) => {
+
+        // Only admins can generate AI insights
+        await verifyAdmin(request);
+
+        const apiKey = process.env.BHARATCODE_API_KEY;
+
+        if (!apiKey) {
+            throw new HttpsError(
+                "failed-precondition",
+                "BharatCode API key is missing. Check functions/.env."
+            );
+        }
+
+        // Read feedback and calculate aggregate statistics.
+        // Individual comments and student identities are never sent to AI.
+        const feedbackSnapshot = await db
+            .collection("feedbackInbox")
+            .get();
+
+        const facilityNames = {
+            mess: "Mess & Food",
+            laundry: "Laundry",
+            wifi: "Wi-Fi & Internet",
+            room: "Room Facilities",
+            water: "Water Facilities",
+            sports: "Campus & Sports"
+        };
+
+        const stats = {};
+
+        FACILITIES.forEach((facility) => {
+            stats[facility] = {
+                count: 0,
+                total: 0,
+                distribution: {
+                    1: 0,
+                    2: 0,
+                    3: 0,
+                    4: 0,
+                    5: 0
+                }
+            };
+        });
+
+        feedbackSnapshot.forEach((doc) => {
+            const data = doc.data();
+            const facility = data.facility;
+            const rating = Number(data.rating);
+
+            if (
+                FACILITIES.includes(facility) &&
+                Number.isInteger(rating) &&
+                rating >= 1 &&
+                rating <= 5
+            ) {
+                stats[facility].count++;
+                stats[facility].total += rating;
+                stats[facility].distribution[rating]++;
+            }
+        });
+
+        // Hide facility metrics until the minimum threshold is reached.
+        const overview = FACILITIES.map((facility) => {
+            const item = stats[facility];
+
+            if (item.count < 5) {
+                return {
+                    facility: facilityNames[facility],
+                    sufficientData: false
+                };
+            }
+
+            return {
+                facility: facilityNames[facility],
+                sufficientData: true,
+                totalSubmissions: item.count,
+                averageRating: Number(
+                    (item.total / item.count).toFixed(2)
+                ),
+                ratingDistribution: item.distribution
+            };
+        });
+
+        // Read only issue counts and statuses.
+        const issueSnapshot = await db
+            .collection("facilityIssues")
+            .get();
+
+        const allowedStatuses = [
+            "under_review",
+            "action_planned",
+            "resolved"
+        ];
+
+        const issues = [];
+
+        issueSnapshot.forEach((doc) => {
+            const data = doc.data();
+
+            if (
+                FACILITIES.includes(data.facility) &&
+                Number(data.reportCount) >= ISSUE_REPORT_THRESHOLD &&
+                allowedStatuses.includes(data.status)
+            ) {
+                issues.push({
+                    facility: facilityNames[data.facility],
+                    reportCount: Number(data.reportCount),
+                    status: data.status
+                });
+            }
+        });
+
+        const promptData = {
+            facilityOverview: overview,
+            facilityIssues: issues
+        };
+
+        // Send aggregate data to BharatCode.
+        let response;
+
+        try {
+            response = await fetch(
+                "https://bharatcode.ai/api/model/v1/responses",
+                {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${apiKey}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        model: "qwen-3.8-27b",
+                        store: false,
+                        max_output_tokens: 1200,
+                        reasoning: {
+                            effort: "none"
+                        },
+                        instructions:
+                            "You are a university hostel facility operations analyst. " +
+                            "Analyze only the supplied aggregate data. " +
+                            "Do not invent facts or assume causes. " +
+                            "Clearly identify facilities with insufficient data. " +
+                            "Provide these headings: Overall Picture, " +
+                            "Facilities Needing Attention, Practical Recommendations, " +
+                            "Limitations. Rank concerns using ratings and issue counts. " +
+                            "Recommendations are suggestions only, not actions taken. " +
+                            "Never infer student identities or claim to have read comments.",
+                        input:
+                            "Analyze these aggregated facility statistics:\n" +
+                            JSON.stringify(promptData)
+                    }),
+                    signal: AbortSignal.timeout(90000)
+                }
+            );
+        } catch (error) {
+            console.error(
+                "BharatCode connection error:",
+                error.name || "Unknown error"
+            );
+
+            throw new HttpsError(
+                "unavailable",
+                "Unable to reach BharatCode. Please try again."
+            );
+        }
+
+        if (!response.ok) {
+            const requestId =
+                response.headers.get("x-request-id") || "not-provided";
+
+            console.error(
+                "BharatCode API error:",
+                response.status,
+                requestId
+            );
+
+            if (response.status === 401 || response.status === 403) {
+                throw new HttpsError(
+                    "permission-denied",
+                    "BharatCode rejected the API key or API access."
+                );
+            }
+
+            if (response.status === 429) {
+                throw new HttpsError(
+                    "resource-exhausted",
+                    "BharatCode rate limit reached. Try again later."
+                );
+            }
+
+            throw new HttpsError(
+                "unavailable",
+                "BharatCode could not generate insights. Please try again."
+            );
+        }
+
+        let result;
+
+        try {
+            result = await response.json();
+        } catch (error) {
+            throw new HttpsError(
+                "internal",
+                "BharatCode returned an invalid response."
+            );
+        }
+
+        const insights = Array.isArray(result.output)
+            ? result.output
+                .filter((item) => item.type === "message")
+                .flatMap((item) =>
+                    Array.isArray(item.content) ? item.content : []
+                )
+                .filter((part) =>
+                    part.type === "output_text" &&
+                    typeof part.text === "string"
+                )
+                .map((part) => part.text)
+                .join("\n")
+                .trim()
+            : "";
+
+        if (!insights) {
+            throw new HttpsError(
+                "internal",
+                "BharatCode returned an empty response."
+            );
+        }
+
+        return {
+            success: true,
+            insights: insights
+        };
+    }
+);
