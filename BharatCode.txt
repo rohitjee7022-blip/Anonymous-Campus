@@ -1,0 +1,10 @@
+﻿Project: Anonymous Campus
+
+This project uses the BharatCode API.
+Model: qwen-3.8-27b
+
+BharatCode AI analyses aggregated campus facility feedback
+and privacy-reviewed issue statistics to generate insights
+and recommendations for administrators.
+
+API keys are stored securely in server-side environment variables.
