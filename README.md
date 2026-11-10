@@ -266,3 +266,40 @@ Anonymous Campus integrates the BharatCode AI API to help administrators underst
 - API: BharatCode Responses API
 
 AI-generated recommendations support administrative decision-making; final decisions remain with human administrators.
+
+## Live Website
+
+**Project URL:** https://anonymous-campus-test.netlify.app
+
+Anonymous Campus is a privacy-first campus facility feedback platform for IIIT Sonepat. It allows students to share feedback about campus facilities while protecting their identities.
+
+## Instructions for Judges
+
+### 1. Open the website
+Visit: https://anonymous-campus-test.netlify.app
+
+### 2. Admin Dashboard
+- Open the Admin Login page.
+- Use the demo administrator Gmail credentials provided separately to the judges.
+- After logging in, judges can explore:
+  - Facility Overview
+  - Recent Student Feedback
+  - Privacy-reviewed facility issues
+  - AI-powered Facility Insights
+
+### 3. Student Dashboard
+- Open the Student Login / Registration page.
+- Student access requires an eligible, verified IIIT Sonepat college email address.
+- After logging in, students can explore the facility feedback system and submit feedback.
+
+### 4. AI Facility Insights
+- Log in using the demo administrator account.
+- Open the Admin Dashboard.
+- Click **Generate AI Insights** to view AI-generated recommendations based on aggregated facility feedback.
+
+### Important Notes
+- Admin demo credentials will be shared separately and should not be published in this repository.
+- Student accounts must meet the college email and eligibility requirements.
+- Student identities are protected in the administrative feedback view.
+
+**Slogan:** Speak honestly. Stay protected.
